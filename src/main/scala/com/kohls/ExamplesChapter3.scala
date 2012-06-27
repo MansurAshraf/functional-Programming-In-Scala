@@ -33,7 +33,6 @@ object ExamplesChapter3 {
 
     def drop[A](l: MList[A])(n: Int): MList[A] = l match {
       case MNil => MNil
-
       case MCons(x, xs) if n > 0 => drop(xs)(n - 1)
       case MCons(x, xs) if n <= 0 => MCons(x, xs)
     }

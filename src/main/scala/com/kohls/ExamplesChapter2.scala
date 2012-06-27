@@ -20,9 +20,11 @@ object ExamplesChapter2 {
 
   def isDivisibleBy(k: Int): Pred[Int] = i => i % k == 0
 
-  def isDivisibleBy3And5(n: Int) = isDivisibleBy(3)(n) && isDivisibleBy(5)(n)
-
   def isDivisibleBy3Or5(n: Int) = isDivisibleBy(3)(n) || isDivisibleBy(5)(n)
+
+  def lift[T](p1: Pred[T])(p2: Pred[T])(combine: (Boolean, Boolean) => Boolean): Pred[T] = {
+    x: T => combine(p1(x), p2(x))
+  }
 
   def applyIf[A](a: A, f: A => A, p: A => Boolean): A = bind[A, Boolean, A](a, p, (p1, p2) => if (p1) f(a) else a)
 
