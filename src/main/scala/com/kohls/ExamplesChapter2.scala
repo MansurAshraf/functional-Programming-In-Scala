@@ -6,28 +6,11 @@ package com.kohls
  */
 
 object ExamplesChapter2 {
-  type Pred[A] = A => Boolean
 
-  def minBy(x: Int, y: Int, f: (Int, Int) => Boolean) = if (f(x, y)) x else y
+  type Int2Int = Int => Int
 
-  def max(x: Int, y: Int) = minBy(x, y, _ > _)
-
-  def isEven(n: Int): Boolean = isDivisibleBy(2)(n)
-
-  def not[A](f: Pred[A]): Pred[A] = x => !f(x)
-
-  def isOdd(n: Int) = not[Int](isEven)(n)
-
-  def isDivisibleBy(k: Int): Pred[Int] = i => i % k == 0
-
-  def isDivisibleBy3Or5(n: Int) = isDivisibleBy(3)(n) || isDivisibleBy(5)(n)
-
-  def lift[T](p1: Pred[T])(p2: Pred[T])(combine: (Boolean, Boolean) => Boolean): Pred[T] = {
-    x: T => combine(p1(x), p2(x))
+  class exercise2 {
+    def absolute(f: Int2Int): Int2Int = i => scala.math.abs(i)
   }
-
-  def applyIf[A](a: A, f: A => A, p: A => Boolean): A = bind[A, Boolean, A](a, p, (p1, p2) => if (p1) f(a) else a)
-
-  def bind[A, B, C](a: A, p: A => B, f: (B, A) => C): C = f(p(a), a)
 
 }
