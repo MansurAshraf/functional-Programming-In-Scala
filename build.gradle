@@ -1,0 +1,12 @@
+apply plugin: 'scala'
+apply plugin: 'idea'
+
+reporsitories{
+    maven{
+        url "http://10.100.228.230:8080/nexus/content/groups/public/"
+    }
+}
+
+dependencies{
+  compile 'org.scalatest:scalatest_2.9.2:2.0.M4'
+}
