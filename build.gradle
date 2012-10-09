@@ -1,7 +1,7 @@
 apply plugin: 'scala'
 apply plugin: 'idea'
 
-reporsitories{
+repositories{
     maven{
         url "http://10.100.228.230:8080/nexus/content/groups/public/"
     }
@@ -9,4 +9,9 @@ reporsitories{
 
 dependencies{
   compile 'org.scalatest:scalatest_2.9.2:2.0.M4'
+    scalaTools 'org.scala-lang:scala-compiler:2.9.2'
+    scalaTools 'org.scala-lang:scala-library:2.9.2'
+
+    // Libraries needed for scala api
+    compile 'org.scala-lang:scala-library:2.9.2'
 }
