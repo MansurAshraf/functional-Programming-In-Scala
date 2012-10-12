@@ -1,10 +1,10 @@
 package com.kohls
 
-
 import org.scalatest.FlatSpec
 
 /**
  * @author Muhammad Ashraf
+<<<<<<< HEAD
  * @since 10/10/12
  */
 class ExamplesChapter2Test extends FlatSpec {
@@ -34,8 +34,6 @@ class ExamplesChapter2Test extends FlatSpec {
   }
 
   "IsDivisible3Or5" should "return true for 5" in new fixture {
-    assert(ex6.isDivisibleBy3Or5(5)===true)
+    assert(ex6.isDivisibleBy3Or5(5) === true)
   }
-
-
 }

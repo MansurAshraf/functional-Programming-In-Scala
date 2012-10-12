@@ -8,6 +8,7 @@ package com.kohls
 
 object ExamplesChapter2 {
 
+
   type Int2Int = Int => Int
   type Pred[A] = A => Boolean
 
