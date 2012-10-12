@@ -32,4 +32,8 @@ object ExamplesChapter2 {
     def lift[A](f: (Boolean, Boolean) => Boolean, g: Pred[A], h: Pred[A]): Pred[A] = x => f(g(x), h(x))
   }
 
+  class Exercise9 {
+    def componse[A, B, C](f: B => C)(g: A => B): A => C = a => f(g(a))
+  }
+
 }
