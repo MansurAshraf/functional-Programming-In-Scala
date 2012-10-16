@@ -7,41 +7,58 @@ package com.kohls
 
 object ExamplesChapter3 {
 
-  sealed trait MList[+A]
+  sealed trait List[+A] {
+    def isEmpty: Boolean
 
-  case object MNil extends MList[Nothing]
+    def head: A
 
-  case class MCons[+A](head: A, tail: MList[A]) extends MList[A]
-
-  object MList {
-    def sum(ints: MList[Int]): Int = ints match {
-      case MNil => 0
-      case MCons(x, xs) => x + sum(xs)
-    }
-
-    def product(ints: MList[Int]): Int = ints match {
-      case MNil => 1
-      case MCons(0, _) => 0
-      case MCons(x, xs) => x * product(xs)
-    }
-
-    def tail[A](ints: MList[A]): MList[A] = ints match {
-      case MNil => MNil
-      case MCons(x, MNil) => MNil
-      case MCons(x, xs) => xs
-    }
-
-    def drop[A](l: MList[A])(n: Int): MList[A] = l match {
-      case MNil => MNil
-      case MCons(x, xs) if n > 0 => drop(xs)(n - 1)
-      case MCons(x, xs) if n <= 0 => MCons(x, xs)
-    }
-
-    def dropWhile[A](l: MList[A])(pred: A => Boolean) = l match {
-      case MNil => MNil
-      case MCons(x, xs) if pred(x) => xs
-      case MCons(x, xs) if !pred(x) => MCons(x, xs)
-    }
+    def tail: List[A]
   }
+
+  case class Con[+A](head: A, tail: List[A]) extends List[A] {
+    def isEmpty = false
+  }
+
+  case object Nil extends List[Nothing] {
+    def isEmpty = true
+
+    def head = throw new IndexOutOfBoundsException
+
+    def tail = throw new IndexOutOfBoundsException
+  }
+
+  object List {
+    def sum(ints: List[Int]): Int = ints match {
+      case Nil => 0
+      case Con(head, tail) => head + sum(tail)
+    }
+
+    def product(ints: List[Double]): Double = ints match {
+      case Nil => 1.0
+      case Con(0.0, tail) => 0.0
+      case Con(head, tail) => head * product(tail)
+    }
+
+    def tail[A](input: List[A]): List[A] = drop(1, input)
+
+    def drop[A](n: Int, input: List[A]): List[A] = {
+      if (input.isEmpty) Nil
+      else if (n == 0) input
+      else drop(n - 1, input.tail)
+    }
+
+    def dropWhile[A](input: List[A])(f: A => Boolean): List[A] = {
+      if (input.isEmpty) Nil
+      else if (!f(input.head)) input
+      else dropWhile(input.tail)(f)
+    }
+
+    def apply[A](as: A*): List[A] = {
+      if (as.isEmpty) Nil
+      else Con(as.head, apply(as.tail: _*))
+    }
+
+  }
+
 
 }
