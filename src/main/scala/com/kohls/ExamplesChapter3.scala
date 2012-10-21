@@ -53,6 +53,27 @@ object ExamplesChapter3 {
       else dropWhile(input.tail)(f)
     }
 
+    @annotation.tailrec
+    def foldLeft[A, B](input: List[A], seed: B)(f: (A, B) => B): B = input match {
+      case Nil => seed
+      case Con(x, xs) => foldLeft(xs, f(x, seed))(f)
+    }
+
+    def map[A, B](list: List[A])(f: A => B): List[B] = {
+      list match {
+        case Nil => Nil
+        case Con(x, xs) => Con(f(x), map(xs)(f))
+      }
+    }
+
+   /* def flatMap[A, B](l: List[A])(f: A => List[B]): List[B] = {
+      l match {
+        case Nil => Nil
+        case Con(x, xs) => Con(map(f(x))(k=>k), flatMap(xs)(f))
+
+      }
+    }*/
+
     def apply[A](as: A*): List[A] = {
       if (as.isEmpty) Nil
       else Con(as.head, apply(as.tail: _*))
