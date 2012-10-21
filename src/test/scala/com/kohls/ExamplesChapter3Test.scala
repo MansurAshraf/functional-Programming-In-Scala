@@ -27,4 +27,23 @@ class ExamplesChapter3Test extends FunSuite {
     assert(result === List(2.0, 3.0))
   }
 
+  test("Test Map") {
+    val input = List(1.0, 2.0, 3.0)
+    val result = List.map(input)(_ * -1)
+    assert(result === List(-1.0, -2.0, -3.0))
+  }
+
+  test("Test  FoldLeft") {
+    val input = List(1.0, 2.0, 3.0)
+    val result = List.foldLeft(input, -1.0)((x, y) => x * y)
+    assert(result === -6.0)
+  }
+
+  test("Test Fold Right") {
+    val input = List(1.0, 2.0, 3.0)
+    val result = List.foldRight(input, -1.0)((a, l) => a * l)
+    assert(result === -6.0)
+
+  }
+
 }

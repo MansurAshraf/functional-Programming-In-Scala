@@ -59,6 +59,11 @@ object ExamplesChapter3 {
       case Con(x, xs) => foldLeft(xs, f(x, seed))(f)
     }
 
+    def foldRight[A, B](input: List[A], seed: B)(f: (A, B) => B): B = input match {
+      case Nil => seed
+      case Con(x, y) => f(x, foldRight(y, seed)(f))
+    }
+
     def map[A, B](list: List[A])(f: A => B): List[B] = {
       list match {
         case Nil => Nil
@@ -66,7 +71,8 @@ object ExamplesChapter3 {
       }
     }
 
-   /* def flatMap[A, B](l: List[A])(f: A => List[B]): List[B] = {
+
+    /* def flatMap[A, B](l: List[A])(f: A => List[B]): List[B] = {
       l match {
         case Nil => Nil
         case Con(x, xs) => Con(map(f(x))(k=>k), flatMap(xs)(f))

@@ -8,7 +8,7 @@ package com.kohls
  */
 object ExampleChapter4 {
 
-  sealed trait Option[+A] {
+  /*sealed trait Option[+A] {
     def map[B](f: A => B): Option[B]
 
     def flatMap[B](f: A => Option[B]): Option[B]
@@ -42,6 +42,6 @@ object ExampleChapter4 {
     def orElse[B >: Nothing](ob: Option[B]) = null
 
     def filter(f: (Nothing) => Boolean) = null
-  }
+  }*/
 
 }
