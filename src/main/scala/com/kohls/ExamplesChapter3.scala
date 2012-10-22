@@ -62,8 +62,16 @@ object ExamplesChapter3 {
 
     def foldLeft[A, B](a: List[A], seed: B)(f: (A, B) => B): B = {
       a match {
-        case Nil=>seed
-        case Con(x,xs)=> foldLeft(xs,f(x,seed))(f)
+        case Nil => seed
+        case Con(x, xs) => foldLeft(xs, f(x, seed))(f)
+      }
+    }
+
+
+    def map[A, B](list: List[A])(f: A => B): List[B] = {
+      list match {
+        case Nil => Nil
+        case Con(x, xs) => Con(f(x), map(xs)(f))
       }
     }
 
