@@ -75,7 +75,7 @@ object ExamplesChapter3 {
       }
     }
 
-    def apply[A](as: A*): List[A] = {
+    def apply[A](as: A*):  List[A] = {
       if (as.isEmpty) Nil
       else Con(as.head, apply(as.tail: _*))
     }
