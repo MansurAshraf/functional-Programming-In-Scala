@@ -27,4 +27,15 @@ class ExamplesChapter3Test extends FunSuite {
     assert(result === List(2.0, 3.0))
   }
 
+  test("Test Drop While") {
+    val input: List[Int] = List(1, 2, 3, 4, 5, 6)
+    val result = List.dropWhile(input)(_ < 4)
+    assert(result === List(4, 5, 6))
+  }
+
+  test("Test Fold Right") {
+    val string = List('a', 'b', 'c')
+    List.foldRight(string, "")((a, b) => a + b)
+  }
+
 }

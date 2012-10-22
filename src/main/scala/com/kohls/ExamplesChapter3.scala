@@ -53,6 +53,20 @@ object ExamplesChapter3 {
       else dropWhile(input.tail)(f)
     }
 
+    def foldRight[A, B](a: List[A], seed: B)(f: (A, B) => B): B = {
+      a match {
+        case Nil => seed
+        case Con(x, xs) => f(x, foldRight(xs, seed)(f))
+      }
+    }
+
+    def foldLeft[A, B](a: List[A], seed: B)(f: (A, B) => B): B = {
+      a match {
+        case Nil=>seed
+        case Con(x,xs)=> foldLeft(xs,f(x,seed))(f)
+      }
+    }
+
     def apply[A](as: A*): List[A] = {
       if (as.isEmpty) Nil
       else Con(as.head, apply(as.tail: _*))
