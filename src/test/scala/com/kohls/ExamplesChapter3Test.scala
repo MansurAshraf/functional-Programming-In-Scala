@@ -35,20 +35,33 @@ class ExamplesChapter3Test extends FunSuite {
 
   test("Test Fold Right") {
     val string = List('a', 'b', 'c')
-    List.foldRight(string, "")((a, b) => a + b)
+    val result = List.foldRight(string, "")((a, b) => a + b)
+    assert("abc" === result)
+  }
 
-    test("Test Map") {
-      val input = List(1.0, 2.0, 3.0)
-      val result = List.map(input)(_ * -1)
-      assert(result === List(-1.0, -2.0, -3.0))
-    }
+  test("Test Map") {
+    val input = List(1.0, 2.0, 3.0)
+    val result = List.map(input)(_ * -1)
+    assert(result === List(-1.0, -2.0, -3.0))
+  }
 
-    test("Test  FoldLeft") {
-      val input = List(1.0, 2.0, 3.0)
-      val result = List.foldLeft(input, -1.0)((x, y) => x * y)
-      assert(result === -6.0)
-    }
+  test("Test  FoldLeft") {
+    val input = List(1.0, 2.0, 3.0)
+    val result = List.foldLeft(input, -1.0)((x, y) => x * y)
+    assert(result === -6.0)
+  }
 
+  test("Test Append") {
+    val list1 = List(1, 2, 3)
+    val list2 = List(4, 5, 6)
+    val result = List.append(list1, list2)
+    assert(result === List(1, 2, 3, 4, 5, 6))
+  }
+
+  test("Test FlatMap") {
+    val input = List(List(1, 2), List(3, 4))
+    val result = List.flatMap(input)(a => List.map(a)(_ * 2))
+    println(result)
   }
 
 }

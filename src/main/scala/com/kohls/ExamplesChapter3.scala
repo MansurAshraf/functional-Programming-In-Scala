@@ -1,5 +1,6 @@
 package com.kohls
 
+
 /**
  * @author Muhammad Ashraf
  * @since 6/20/12
@@ -75,7 +76,27 @@ object ExamplesChapter3 {
       }
     }
 
-    def apply[A](as: A*):  List[A] = {
+    def append[A](list1: List[A], list2: List[A]): List[A] = {
+      list1 match {
+        case Nil => list2
+        case Con(x, xs) => Con(x, append(xs, list2))
+      }
+    }
+
+    def filter[A](input: List[A], f: A => Boolean): List[A] = {
+      List.foldRight(input, Nil: List[A]) {
+        (a, seed) => {
+          if (f(a)) Con(a, seed) else seed
+        }
+      }
+    }
+
+
+    def flatMap[A, B](list: List[A])( f: A => List[B]): List[B] = {
+     foldRight(map(list)(f),Nil:List[B])(append)
+    }
+
+    def apply[A](as: A*): List[A] = {
       if (as.isEmpty) Nil
       else Con(as.head, apply(as.tail: _*))
     }
