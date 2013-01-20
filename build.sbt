@@ -3,6 +3,6 @@ name := "functional_programming_in_scala"
 
 version := "1.0"
 
-scalaVersion := "2.9.2"
+scalaVersion := "2.10.0"
 
-libraryDependencies += "org.scalatest" % "scalatest_2.9.2" % "2.0.M4"
+libraryDependencies += "org.scalatest" % "scalatest_2.10" % "1.9.1" % "test"

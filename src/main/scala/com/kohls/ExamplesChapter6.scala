@@ -1,5 +1,7 @@
 package com.kohls
 
+import collection.mutable
+
 
 /**
  *
@@ -8,11 +10,42 @@ package com.kohls
  *
  */
 object ExamplesChapter6 {
+  implicit def toB(x: Any) = x.asInstanceOf[Boolean]
+
+  class MutableShoppingCartService(val session: mutable.HashMap[String, Any]) {
+
+    def login(username: String, password: String): Boolean = {
+      if (username == "MVP" && password == "MVP") {
+        session += ("isLoggedIn" -> true)
+      } else {
+        session += ("isLoggedIn" -> false)
+      }
+      session("isLoggedIn")
+    }
+
+    def addItemToCart(quantity: Int): Boolean = {
+      if (session("isLoggedIn")) {
+        session +=(("cart" -> quantity), ("isCartEmpty" -> false))
+      } else {
+        session += ("isCartEmpty" -> true)
+      }
+      !session("isCartEmpty")
+    }
+
+    def checkout: Boolean = {
+      if (session("isLoggedIn") && !session("isCartEmpty")) {
+        session += ("checkoutStatus" -> "successfull")
+        true
+      } else {
+        session +=(("checkoutStatus" -> "failure"), ("reason" -> "User not Logged in or Cart is empty"))
+        false
+      }
+    }
+
+  }
 
   class ShoppingCartService {
-
-
-    def login(username: String, password: String): State[Map[String, _ <: Any], Boolean] = State {
+    def login(username: String, password: String): State[Map[String, Any], Boolean] = State {
       session =>
         if (username == "MVP" && password == "MVP") {
           val updatedSession = session + ("isLoggedIn" -> true)
@@ -23,10 +56,10 @@ object ExamplesChapter6 {
         }
     }
 
-    def addItemToCart(quantity: Int): State[Map[String, _ <: Any], Boolean] = State {
+    def addItemToCart(quantity: Int): State[Map[String, Any], Boolean] = State {
       session =>
-        if (session("isLoggedIn").asInstanceOf[Boolean]) {
-          val updatedSession = session ++ Seq(("cart" -> quantity), ("isCartEmpty" -> false))
+        if (session("isLoggedIn")) {
+          val updatedSession = session +(("cart" -> quantity), ("isCartEmpty" -> false))
           (updatedSession, true)
         } else {
           val updatedSession = session + ("isCartEmpty" -> true)
@@ -35,13 +68,13 @@ object ExamplesChapter6 {
     }
 
 
-    def checkout: State[Map[String, _ <: Any], Boolean] = State {
+    def checkout: State[Map[String, Any], Boolean] = State {
       session =>
-        if (session("isLoggedIn").asInstanceOf[Boolean] && !session("isCartEmpty").asInstanceOf[Boolean]) {
+        if (session("isLoggedIn") && !session("isCartEmpty")) {
           val updatedSession = session + ("checkoutStatus" -> "successfull")
           (updatedSession, true)
         } else {
-          val updatedSession = session ++ Seq(("checkoutStatus" -> "failure"), ("reason" -> "User not Logged in or Cart is empty"))
+          val updatedSession = session +(("checkoutStatus" -> "failure"), ("reason" -> "User not Logged in or Cart is empty"))
           (updatedSession, false)
         }
     }
